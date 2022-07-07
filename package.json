@@ -1,0 +1,22 @@
+{
+  "name": "haroldd-dcharacterbuilder",
+  "version": "1.0.0",
+  "description": "D&amp;D Character Builder Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kodeden/HaroldD-DCharacterBuilder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kodeden/HaroldD-DCharacterBuilder/issues"
+  },
+  "homepage": "https://github.com/Kodeden/HaroldD-DCharacterBuilder#readme",
+  "dependencies": {
+    "react-router-dom": "^6.3.0"
+  }
+}
