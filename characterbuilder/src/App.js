@@ -1,96 +1,57 @@
 import './App.css';
-import { Routes, Route, Link } from "react-router-dom";
+import { useState, createContext, useContext } from "react";
+import { Routes, Route, Link, useNavigate, Navigate } from "react-router-dom";
+import Race from './components/Race.js';
+import Class from './components/Class.js';
+import Login from './components/Login.js';
 
+export const AuthContext = createContext();
 
-
-function Home() {
-  return (
-    <>
-      <main>
-        <ul>
-          <Link to="/race"><li>Race and Ability Scores</li></Link>
-          <li>Class</li>
-          <li>Spell Selection</li>
-          <li>Background</li>
-          <li>ASIs/Feats</li>
-          <li>Character Sheet</li>
-        </ul>
-        <div><button>Save</button><button>Load</button></div>
-        <div>Variants
-          <ul>
-            <li><input type='checkbox'></input>Rolled HP (default 1/2 HD rounded up)</li>
-            <li><input type='checkbox'></input>Feats (default is using ASIs only)</li>
-            <li><input type='checkbox'></input>Lineage Stats (default is normal Racial stat boosts)</li>
-            <li><input type='checkbox'></input>Rolled Stats (default is Point Buy)</li>
-          </ul>
-        </div>
-      </main>
-    </>
-  );
+function RequiredAuth({ children }) {
+  const navigate = useNavigate();
+  const { auth } = useContext(AuthContext);
+  return auth.isAuthenticated === true ? children : <Navigate to="/" replace />;
 }
-
-function Race() {
-  return (
-    <>
-      <main>
-          <select>
-            <option value="Human">Human</option>
-            <option value="Elf">Elf</option>
-            <option value="Dwarf">Dwarf</option>
-            <option value="Gnome">Gnome</option>
-          </select>
-          <div>
-            <input type='checkbox'></input>Lineage Stats (default is normal Racial stat boosts)
-            <input type='checkbox'></input>Rolled Stats (default is Point Buy)
-          </div>
-          <div>Point Buy <input id='pointbuyvalue' type='number'></input></div>
-          <div>
-            Strength
-            <input className='abilityscore' type='number'></input>
-            <button className='upbutton'>^</button><button className='downbutton'>v</button>
-          </div>
-          <div>
-            Dexterity
-            <input className='abilityscore' type='number'></input>
-            <button className='upbutton'>^</button><button className='downbutton'>v</button>
-          </div>
-          <div>
-            Constitution
-            <input className='abilityscore' type='number'></input>
-            <button className='upbutton'>^</button><button className='downbutton'>v</button>
-          </div>
-          <div>
-            Intelligence
-            <input className='abilityscore' type='number'></input>
-            <button className='upbutton'>^</button><button className='downbutton'>v</button>
-          </div>
-          <div>
-            Wisdom
-            <input className='abilityscore' type='number'></input>
-            <button className='upbutton'>^</button><button className='downbutton'>v</button>
-          </div>
-          <div>
-            Charisma
-            <input className='abilityscore' type='number'></input>
-            <button className='upbutton'>^</button><button className='downbutton'>v</button>
-          </div>
-          <Link to="/"><button>Home Menu</button></Link>
-          <button>Next: Class</button>
-      </main>
-    </>
-  );
-}
-
 
 function App() {
+  const [auth, setAuth] = useState({ isAuthenticated: false });
+  const navigate = useNavigate();
+
   return (
-    <div className="App">
-      <h1>D&D 5E Character Builder</h1>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="race" element={<Race />} />
-      </Routes>
-    </div>
+    <AuthContext.Provider value={{ auth, setAuth }}>
+      <div className="App">
+        <h1>D&D 5E Character Builder</h1>
+        {auth.isAuthenticated ? (
+          <nav>
+            <Link to="/race"><div>Race and Ability Scores</div></Link>
+            <Link to="/class"><div>Class</div></Link>
+            <div>Spell Selection</div>
+            <div>Background</div>
+            <div>ASIs/Feats</div>
+            <div>Character Sheet</div>
+            <button>Save</button>
+            <button>Load</button>
+            <button onClick={() => {
+                setAuth({ isAuthenticated: false });
+                navigate("/");
+              }}>Sign Out</button>
+          </nav>
+        ) : null}
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="race" element={
+              <RequiredAuth>
+                <Race />
+              </RequiredAuth>
+            } />
+          <Route path="class" element={
+              <RequiredAuth>
+                <class />
+              </RequiredAuth>
+            } />
+        </Routes>
+      </div>
+    </AuthContext.Provider>
   );
 }
 export default App;
