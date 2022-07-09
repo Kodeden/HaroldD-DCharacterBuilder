@@ -46,7 +46,7 @@ function App() {
             } />
           <Route path="class" element={
               <RequiredAuth>
-                <class />
+                <Class />
               </RequiredAuth>
             } />
         </Routes>
