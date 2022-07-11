@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Race.css";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import { waitFor } from "@testing-library/react";
 
 export default function Race() {
 
@@ -13,7 +14,7 @@ export default function Race() {
 
     const formik = useFormik({
         initialValues: { 
-            race: "Human",
+            race: "Human",  
             racial1: "Select an ability",
             racial2: "Select an ability",
             racial3: "Select an ability",
@@ -29,15 +30,15 @@ export default function Race() {
             con: 8,
             int: 8,
             wis: 8,
-            cha: 8,
+            cha: 8
             },
 
         validationSchema: Yup.object({
           race: Yup.string(),
-          racial1: Yup.string().notOneOf([Yup.ref('racial2'),Yup.ref('racial3'),Yup.ref('racial4')],"Cannot have two racial boosts on the same ability"),
-          racial2: Yup.string().notOneOf([Yup.ref('racial1'),Yup.ref('racial3'),Yup.ref('racial4')],"Cannot have two racial boosts on the same ability"),
-          racial3: Yup.string().notOneOf([Yup.ref('racial1'),Yup.ref('racial2'),Yup.ref('racial4')],"Cannot have two racial boosts on the same ability"),
-          racial4: Yup.string().notOneOf([Yup.ref('racial1'),Yup.ref('racial2'),Yup.ref('racial3')],"Cannot have two racial boosts on the same ability"),
+          racial1: Yup.string()/*.notOneOf([Yup.ref('racial2'),Yup.ref('racial3'),Yup.ref('racial4')],"Cannot have two racial boosts on the same ability")*/,
+          racial2: Yup.string()/*.notOneOf([Yup.ref('racial1'),Yup.ref('racial3'),Yup.ref('racial4')],"Cannot have two racial boosts on the same ability")*/,
+          racial3: Yup.string()/*.notOneOf([Yup.ref('racial1'),Yup.ref('racial2'),Yup.ref('racial4')],"Cannot have two racial boosts on the same ability")*/,
+          racial4: Yup.string()/*.notOneOf([Yup.ref('racial1'),Yup.ref('racial2'),Yup.ref('racial3')],"Cannot have two racial boosts on the same ability")*/,
           rawstr: Yup.number().min(3, "Abilities cannot be lower than 3").max(18, "Abilities cannot be greater than 18 before racial modifiers").required("Required"),
           rawdex: Yup.number().min(3, "Abilities cannot be lower than 3").max(18, "Abilities cannot be greater than 18 before racial modifiers").required("Required"),
           rawcon: Yup.number().min(3, "Abilities cannot be lower than 3").max(18, "Abilities cannot be greater than 18 before racial modifiers").required("Required"),
@@ -51,17 +52,15 @@ export default function Race() {
           wis: Yup.number(),
           cha: Yup.number(),
         }),
-
         onSubmit: (values) => {
-          console.log(values);
-          localStorage.setItem("raceandstats", JSON.stringify(values));
+            localStorage.setItem("raceandstats", JSON.stringify(values));
+            console.log(JSON.parse(localStorage.getItem("raceandstats")).race);
         },
       });
 
     return (
         <main>
             <form
-                onBlur={formik.handleSubmit}
                 className="framecontainer"
             >
                 <div className="racebox">Race
@@ -107,7 +106,11 @@ export default function Race() {
                                 <MenuItem value="Wisdom">Wisdom</MenuItem>
                                 <MenuItem value="Charisma">Charisma</MenuItem>
                             </Select>
-                            {(formik.values.racial1!=="Select an ability" && formik.errors.racial1) ? (<span>Multiple Racial Boosts cannot be applied to the same ability</span>) : null}
+                            {(formik.values.racial1!=="Select an ability" && 
+                                (formik.values.racial1===formik.values.racial2 ||
+                                    formik.values.racial1===formik.values.racial3 ||
+                                    formik.values.racial1===formik.values.racial4    )
+                                    ) ? (<span>Multiple Racial Boosts cannot be applied to the same ability</span>) : null}
                         </div>
                     ) : null}
                     {(
@@ -128,7 +131,11 @@ export default function Race() {
                                 <MenuItem value="Wisdom">Wisdom</MenuItem>
                                 <MenuItem value="Charisma">Charisma</MenuItem>
                             </Select>
-                            {(formik.values.racial2!=="Select an ability" && formik.errors.racial2) ? (<span>Multiple Racial Boosts cannot be applied to the same ability</span>) : null}
+                            {(formik.values.racial2!=="Select an ability" && 
+                                (formik.values.racial2===formik.values.racial1 ||
+                                    formik.values.racial2===formik.values.racial3 ||
+                                    formik.values.racial2===formik.values.racial4    )
+                                    ) ? (<span>Multiple Racial Boosts cannot be applied to the same ability</span>) : null}
                         </div>
                     ) : null}
                                         {(
@@ -153,7 +160,11 @@ export default function Race() {
                                 <MenuItem value="Wisdom">Wisdom</MenuItem>
                                 <MenuItem value="Charisma">Charisma</MenuItem>
                             </Select>
-                            {(formik.values.racial3!=="Select an ability" && formik.errors.racial3) ? (<span>Multiple Racial Boosts cannot be applied to the same ability</span>) : null}
+                            {(formik.values.racial3!=="Select an ability" && 
+                                (formik.values.racial3===formik.values.racial1 ||
+                                    formik.values.racial3===formik.values.racial2 ||
+                                    formik.values.racial3===formik.values.racial4    )
+                                    ) ? (<span>Multiple Racial Boosts cannot be applied to the same ability</span>) : null}
                         </div>
                         ) : null}
                     {(
@@ -175,7 +186,11 @@ export default function Race() {
                                 <MenuItem value="Wisdom">Wisdom</MenuItem>
                                 <MenuItem value="Charisma">Charisma</MenuItem>
                             </Select>
-                            {(formik.values.racial4!=="Select an ability" && formik.errors.racial4) ? (<span>Multiple Racial Boosts cannot be applied to the same ability</span>) : null}
+                            {(formik.values.racial4!=="Select an ability" && 
+                                (formik.values.racial4===formik.values.racial1 ||
+                                    formik.values.racial4===formik.values.racial2 ||
+                                    formik.values.racial4===formik.values.racial3    )
+                                    ) ? (<span>Multiple Racial Boosts cannot be applied to the same ability</span>) : null}
                         </div>                  
                     ) : null}
                 </div>
@@ -347,6 +362,18 @@ export default function Race() {
                             (formik.values.rawwis>13 ? formik.values.rawwis-13 : 0) +
                             (formik.values.rawcha>13 ? formik.values.rawcha-13 : 0)
                         )}/27</div>
+                </div>
+                <div>
+                    <button type="submit" onClick={formik.handleSubmit}>Save</button>
+                    <button onClick={e => {
+                        formik.setFieldValue("race", JSON.parse(localStorage.getItem("raceandstats")).race);
+                        /*setTimeout(() => {
+                            formik.setFieldValue("racial1", JSON.parse(localStorage.getItem("raceandstats")).racial1);
+                            formik.setFieldValue("racial2", JSON.parse(localStorage.getItem("raceandstats")).racial1);
+                            formik.setFieldValue("racial3", JSON.parse(localStorage.getItem("raceandstats")).racial1);
+                            formik.setFieldValue("racial4", JSON.parse(localStorage.getItem("raceandstats")).racial1);
+                            }, 3000);*/
+                    }}>Load</button>
                 </div>
             </form>
             <button className='next' onClick={() => {
