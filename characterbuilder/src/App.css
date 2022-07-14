@@ -1,24 +1,20 @@
 .App {
   text-align: center;
-  border: 1px solid black;
+  color: #ABE188;
 }
 
-
-.App-link {
-  color: #61dafb;
-}
-
-nav div {
-  padding: .5em;
-  border: 1px solid red;
-  border-radius: 1em 1em 0 0;
-  display: inline;
+body {
+  background-color: #312F2F;
 }
 
 button {
   margin: .5em;
   border-radius: 1em;
   display: inline;
+  background-color: #C44536;
   text-align: center;
 }
 
+button:active {
+  background-color: #ABE188;
+}

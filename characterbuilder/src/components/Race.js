@@ -6,11 +6,24 @@ import * as Yup from "yup";
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { waitFor } from "@testing-library/react";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
 
 export default function Race() {
 
     const navigate = useNavigate();
+
+    const theme = createTheme({
+        palette: {
+          primary: {
+            main: '#ABE188',
+            contrastText: '#ABE188',
+
+          },
+        },
+    });
+
 
     const formik = useFormik({
         initialValues: { 
@@ -35,10 +48,10 @@ export default function Race() {
 
         validationSchema: Yup.object({
           race: Yup.string(),
-          racial1: Yup.string()/*.notOneOf([Yup.ref('racial2'),Yup.ref('racial3'),Yup.ref('racial4')],"Cannot have two racial boosts on the same ability")*/,
-          racial2: Yup.string()/*.notOneOf([Yup.ref('racial1'),Yup.ref('racial3'),Yup.ref('racial4')],"Cannot have two racial boosts on the same ability")*/,
-          racial3: Yup.string()/*.notOneOf([Yup.ref('racial1'),Yup.ref('racial2'),Yup.ref('racial4')],"Cannot have two racial boosts on the same ability")*/,
-          racial4: Yup.string()/*.notOneOf([Yup.ref('racial1'),Yup.ref('racial2'),Yup.ref('racial3')],"Cannot have two racial boosts on the same ability")*/,
+          racial1: Yup.string(),
+          racial2: Yup.string(),
+          racial3: Yup.string(),
+          racial4: Yup.string(),
           rawstr: Yup.number().min(3, "Abilities cannot be lower than 3").max(18, "Abilities cannot be greater than 18 before racial modifiers").required("Required"),
           rawdex: Yup.number().min(3, "Abilities cannot be lower than 3").max(18, "Abilities cannot be greater than 18 before racial modifiers").required("Required"),
           rawcon: Yup.number().min(3, "Abilities cannot be lower than 3").max(18, "Abilities cannot be greater than 18 before racial modifiers").required("Required"),
@@ -62,12 +75,19 @@ export default function Race() {
         <main>
             <form
                 className="framecontainer"
-            >
-                <div className="racebox">Race
+                onSubmit={formik.handleSubmit}
+            >                    
+            <ThemeProvider theme={theme}>
+                <div className="racebox"><span className="racelabel">Race</span>
+
                     <Select
                         id='race' 
                         {...formik.getFieldProps("race")} 
                         value={formik.values.race}
+                        sx={{
+                            color:'primary.contrastText',
+                        }}
+                        inputProps={{style:{color:'#ABE188'}}}
                         onChange={e => {
                             formik.handleChange(e)
                             formik.setFieldValue("racial1", "Select an ability")
@@ -91,9 +111,12 @@ export default function Race() {
                         formik.values.race==="Gnome" ||
                         formik.values.race==="Half-Elf"
                     ) ? (
-                        <div>Racial Boost +2
+                        <div><span className="racelabel">Racial Boost +2</span>
                             <Select
                                 id='racial1'
+                                sx={{
+                                    color:'primary.contrastText'
+                                }}
                                 {...formik.getFieldProps("racial1")} 
                                 value={formik.values.racial1}
                                 onChange={formik.handleChange}
@@ -110,15 +133,18 @@ export default function Race() {
                                 (formik.values.racial1===formik.values.racial2 ||
                                     formik.values.racial1===formik.values.racial3 ||
                                     formik.values.racial1===formik.values.racial4    )
-                                    ) ? (<span>Multiple Racial Boosts cannot be applied to the same ability</span>) : null}
+                                    ) ? (<div className="formikerror">Multiple Racial Boosts cannot be applied to the same ability</div>) : null}
                         </div>
                     ) : null}
                     {(
                         formik.values.race==="Mountain Dwarf"
                     ) ? (
-                        <div>Racial Boost +2
+                        <div><span className="racelabel">Racial Boost +2</span>
                             <Select
                                 id='racial2'
+                                sx={{
+                                    color:'primary.contrastText'
+                                }}
                                 {...formik.getFieldProps("racial2")} 
                                 value={formik.values.racial2}
                                 onChange={formik.handleChange}
@@ -135,7 +161,7 @@ export default function Race() {
                                 (formik.values.racial2===formik.values.racial1 ||
                                     formik.values.racial2===formik.values.racial3 ||
                                     formik.values.racial2===formik.values.racial4    )
-                                    ) ? (<span>Multiple Racial Boosts cannot be applied to the same ability</span>) : null}
+                                    ) ? (<div className="formikerror">Multiple Racial Boosts cannot be applied to the same ability</div>) : null}
                         </div>
                     ) : null}
                                         {(
@@ -145,9 +171,12 @@ export default function Race() {
                         formik.values.race==="Gnome" ||
                         formik.values.race==="Human (variant)"
                     ) ? (
-                        <div>Racial Boost +1
+                        <div><span className="racelabel">Racial Boost +1</span>
                             <Select
                                 id='racial3'
+                                sx={{
+                                    color:'primary.contrastText'
+                                }}
                                 {...formik.getFieldProps("racial3")} 
                                 value={formik.values.racial3}
                                 onChange={formik.handleChange}
@@ -164,16 +193,19 @@ export default function Race() {
                                 (formik.values.racial3===formik.values.racial1 ||
                                     formik.values.racial3===formik.values.racial2 ||
                                     formik.values.racial3===formik.values.racial4    )
-                                    ) ? (<span>Multiple Racial Boosts cannot be applied to the same ability</span>) : null}
+                                    ) ? (<div className="formikerror">Multiple Racial Boosts cannot be applied to the same ability</div>) : null}
                         </div>
                         ) : null}
                     {(
                         formik.values.race==="Half-Elf" ||
                         formik.values.race==="Human (variant)"
                     ) ? (
-                        <div>Racial Boost +1
+                        <div><span className="racelabel">Racial Boost +1</span>
                             <Select
                                 id='racial4'
+                                sx={{
+                                    color:'primary.contrastText'
+                                }}
                                 {...formik.getFieldProps("racial4")} 
                                 value={formik.values.racial4}
                                 onChange={formik.handleChange}
@@ -190,151 +222,185 @@ export default function Race() {
                                 (formik.values.racial4===formik.values.racial1 ||
                                     formik.values.racial4===formik.values.racial2 ||
                                     formik.values.racial4===formik.values.racial3    )
-                                    ) ? (<span>Multiple Racial Boosts cannot be applied to the same ability</span>) : null}
+                                    ) ? (<div className="formikerror">Multiple Racial Boosts cannot be applied to the same ability</div>) : null}
                         </div>                  
                     ) : null}
                 </div>
                 <div className="statbox">
-                    <div className="statheader"><span>Ability</span><span>Total</span></div>
-                    <div>
-                    Strength
-                    <TextField
-                        className='abilityscore' 
-                        type='number' 
-                        {...formik.getFieldProps("rawstr")}
-                        value={formik.values.rawstr}
-                        onChange={formik.handleChange}>
-                    </TextField>
-                    {formik.touched.rawstr && formik.errors.rawstr ? (<span>{formik.errors.rawstr}</span>) : null}
-                    <TextField
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        className='abilityscore' 
-                        type='number' 
-                        {...formik.getFieldProps("str")}
-                        onChange={formik.handleChange}
-                        value={formik.values.rawstr+((formik.values.racial1==="Strength" || formik.values.racial2==="Strength") ? 2 
-                        : (formik.values.racial3==="Strength" || formik.values.racial4==="Strength" || formik.values.race==="Human") ? 1 
-                        : 0)}>
-                    </TextField>
+                    
+                        <div>Ability</div>
+                        <div>Strength</div>
+                        <div>Dexterity</div>
+                        <div>Constitution</div>
+                        <div>Intelligence</div>
+                        <div>Wisdom</div>
+                        <div>Charisma</div>
+                    
+
+                        <div>Purchased Stats</div>
+                        <div>
+                            <TextField
+                                className='abilityscore' 
+                                type='number' 
+                                {...formik.getFieldProps("rawstr")}
+                                value={formik.values.rawstr}
+                                onChange={formik.handleChange}>
+                            </TextField>
+                        </div>
+                        <div>
+                            <TextField 
+                                className='abilityscore' 
+                                type='number' 
+                                {...formik.getFieldProps("rawdex")}
+                                value={formik.values.rawdex}
+                                onChange={formik.handleChange}>
+                            </TextField>
+                        </div>
+                        <div>
+                            <TextField 
+                                className='abilityscore' 
+                                type='number'
+                                {...formik.getFieldProps("rawcon")}
+                                value={formik.values.rawcon}
+                                onChange={formik.handleChange}>
+                            </TextField>
+                        </div>
+                        <div>
+                            <TextField 
+                                className='abilityscore' 
+                                type='number' 
+                                {...formik.getFieldProps("rawint")}
+                                value={formik.values.rawint}
+                                onChange={formik.handleChange}>
+                            </TextField>
+                        </div>
+                        <div>
+                            <TextField 
+                                className='abilityscore' 
+                                type='number' 
+                                {...formik.getFieldProps("rawwis")}
+                                value={formik.values.rawwis}
+                                onChange={formik.handleChange}>
+                            </TextField>
+                        </div>
+                        <div>
+                            <TextField 
+                                className='abilityscore' 
+                                type='number' 
+                                {...formik.getFieldProps("rawcha")}
+                                value={formik.values.rawcha}
+                                onChange={formik.handleChange}>
+                            </TextField>
+                        </div>
+                    
+
+                        <div>Total Stats</div>
+                        <div>
+                            <TextField
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                className='abilityscore' 
+                                type='number' 
+                                {...formik.getFieldProps("str")}
+                                onChange={formik.handleChange}
+                                value={formik.values.rawstr+((formik.values.racial1==="Strength" || formik.values.racial2==="Strength") ? 2 
+                                : (formik.values.racial3==="Strength" || formik.values.racial4==="Strength" || formik.values.race==="Human") ? 1 
+                                : 0)}>
+                            </TextField>
+                        </div>
+                        <div>
+                            <TextField
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                className='abilityscore' 
+                                type='number' 
+                                {...formik.getFieldProps("dex")}
+                                value={formik.values.rawdex + ((formik.values.racial1==="Dexterity" || formik.values.racial2==="Dexterity") ? 2 
+                                : (formik.values.racial3==="Dexterity" || formik.values.racial4==="Dexterity" || formik.values.race==="Human") ? 1 
+                                : 0)}
+                                onChange={formik.handleChange}>
+                            </TextField>
+                        </div>
+                        <div>
+                            <TextField
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                className='abilityscore' 
+                                type='number' 
+                                {...formik.getFieldProps("con")}
+                                value={formik.values.rawcon + ((formik.values.racial1==="Constitution" || formik.values.racial2==="Constitution") ? 2 
+                                : (formik.values.racial3==="Constitution" || formik.values.racial4==="Constitution" || formik.values.race==="Human") ? 1 
+                                : 0)}
+                                onChange={formik.handleChange}>
+                            </TextField>
+                        </div>
+                        <div>
+                            <TextField
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                className='abilityscore' 
+                                type='number' 
+                                {...formik.getFieldProps("int")}
+                                value={formik.values.rawint + ((formik.values.racial1==="Intelligence" || formik.values.racial2==="Intelligence") ? 2 
+                                : (formik.values.racial3==="Intelligence" || formik.values.racial4==="Intelligence" || formik.values.race==="Human") ? 1 
+                                : 0)}
+                                onChange={formik.handleChange}>
+                            </TextField>
+                        </div>
+                        <div>
+                            <TextField
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                className='abilityscore' 
+                                type='number' 
+                                {...formik.getFieldProps("wis")}
+                                value={formik.values.rawwis + ((formik.values.racial1==="Wisdom" || formik.values.racial2==="Wisdom") ? 2 
+                                : (formik.values.racial3==="Wisdom" || formik.values.racial4==="Wisdom" || formik.values.race==="Human") ? 1 
+                                : 0)}
+                                onChange={formik.handleChange}>
+                            </TextField>
+                        </div>
+                        <div>
+                            <TextField
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                                className='abilityscore' 
+                                type='number' 
+                                {...formik.getFieldProps("cha")}
+                                value={formik.values.rawcha + ((formik.values.racial1==="Charisma" || formik.values.racial2==="Charisma") ? 2 
+                                : (formik.values.racial3==="Charisma" || formik.values.racial4==="Charisma" || formik.values.race==="Human") ? 1 
+                                : 0)}
+                                onChange={formik.handleChange}>
+                            </TextField>
+                        </div>
+                    
+                        <div></div>
+                        <div>
+                            {formik.touched.rawstr && formik.errors.rawstr ? (<span className="formikerror">{formik.errors.rawstr}</span>) : null}
+                        </div>
+                        <div>
+                            {formik.touched.rawdex && formik.errors.rawdex ? (<span className="formikerror">{formik.errors.rawdex}</span>) : null}
+                        </div>
+                        <div>
+                            {formik.touched.rawcon && formik.errors.rawcon ? (<span className="formikerror">{formik.errors.rawcon}</span>) : null}
+                        </div>
+                        <div>
+                            {formik.touched.rawint && formik.errors.rawint ? (<span className="formikerror">{formik.errors.rawint}</span>) : null}
+                        </div>
+                        <div>
+                            {formik.touched.rawwis && formik.errors.rawwis ? (<span className="formikerror">{formik.errors.rawwis}</span>) : null}
+                        </div>
+                        <div>
+                            {formik.touched.rawcha && formik.errors.rawcha ? (<span className="formikerror">{formik.errors.rawcha}</span>) : null}
+                        </div>
                     </div>
-                    <div>
-                    Dexterity
-                    <TextField 
-                        className='abilityscore' 
-                        type='number' 
-                        {...formik.getFieldProps("rawdex")}
-                        value={formik.values.rawdex}
-                        onChange={formik.handleChange}>
-                    </TextField>
-                    {formik.touched.rawdex && formik.errors.rawdex ? (<span>{formik.errors.rawdex}</span>) : null}
-                    <TextField
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        className='abilityscore' 
-                        type='number' 
-                        {...formik.getFieldProps("dex")}
-                        value={formik.values.rawdex + ((formik.values.racial1==="Dexterity" || formik.values.racial2==="Dexterity") ? 2 
-                        : (formik.values.racial3==="Dexterity" || formik.values.racial4==="Dexterity" || formik.values.race==="Human") ? 1 
-                        : 0)}
-                        onChange={formik.handleChange}>
-                    </TextField>
-                    </div>
-                    <div>
-                    Constitution
-                    <TextField 
-                        className='abilityscore' 
-                        type='number' 
-                        {...formik.getFieldProps("rawcon")}
-                        value={formik.values.rawcon}
-                        onChange={formik.handleChange}>
-                    </TextField>
-                    {formik.touched.rawcon && formik.errors.rawcon ? (<span>{formik.errors.rawcon}</span>) : null}
-                    <TextField
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        className='abilityscore' 
-                        type='number' 
-                        {...formik.getFieldProps("con")}
-                        value={formik.values.rawcon + ((formik.values.racial1==="Constitution" || formik.values.racial2==="Constitution") ? 2 
-                        : (formik.values.racial3==="Constitution" || formik.values.racial4==="Constitution" || formik.values.race==="Human") ? 1 
-                        : 0)}
-                        onChange={formik.handleChange}>
-                    </TextField>
-                    </div>
-                    <div>
-                    Intelligence
-                    <TextField 
-                        className='abilityscore' 
-                        type='number' 
-                        {...formik.getFieldProps("rawint")}
-                        value={formik.values.rawint}
-                        onChange={formik.handleChange}>
-                    </TextField>
-                    {formik.touched.rawint && formik.errors.rawint ? (<span>{formik.errors.rawint}</span>) : null}
-                    <TextField
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        className='abilityscore' 
-                        type='number' 
-                        {...formik.getFieldProps("int")}
-                        value={formik.values.rawint + ((formik.values.racial1==="Intelligence" || formik.values.racial2==="Intelligence") ? 2 
-                        : (formik.values.racial3==="Intelligence" || formik.values.racial4==="Intelligence" || formik.values.race==="Human") ? 1 
-                        : 0)}
-                        onChange={formik.handleChange}>
-                    </TextField>
-                    </div>
-                    <div>
-                    Wisdom
-                    <TextField 
-                        className='abilityscore' 
-                        type='number' 
-                        {...formik.getFieldProps("rawwis")}
-                        value={formik.values.rawwis}
-                        onChange={formik.handleChange}>
-                    </TextField>
-                    {formik.touched.rawwis && formik.errors.rawwis ? (<span>{formik.errors.rawwis}</span>) : null}
-                    <TextField
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        className='abilityscore' 
-                        type='number' 
-                        {...formik.getFieldProps("wis")}
-                        value={formik.values.rawwis + ((formik.values.racial1==="Wisdom" || formik.values.racial2==="Wisdom") ? 2 
-                        : (formik.values.racial3==="Wisdom" || formik.values.racial4==="Wisdom" || formik.values.race==="Human") ? 1 
-                        : 0)}
-                        onChange={formik.handleChange}>
-                    </TextField>
-                    </div>
-                    <div>
-                    Charisma
-                    <TextField 
-                        className='abilityscore' 
-                        type='number' 
-                        {...formik.getFieldProps("rawcha")}
-                        value={formik.values.rawcha}
-                        onChange={formik.handleChange}>
-                    </TextField>
-                    {formik.touched.rawcha && formik.errors.rawcha ? (<span>{formik.errors.rawcha}</span>) : null}
-                    <TextField
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        className='abilityscore' 
-                        type='number' 
-                        {...formik.getFieldProps("cha")}
-                        value={formik.values.rawcha + ((formik.values.racial1==="Charisma" || formik.values.racial2==="Charisma") ? 2 
-                        : (formik.values.racial3==="Charisma" || formik.values.racial4==="Charisma" || formik.values.race==="Human") ? 1 
-                        : 0)}
-                        onChange={formik.handleChange}>
-                    </TextField>
-                    </div>   
-                    <div>Point Buy {(
+                    <div className="pointbuycalc">Point Buy {(
                         formik.values.rawstr>15 ||
                         formik.values.rawstr<8  ||
                         formik.values.rawdex>15 ||
@@ -362,23 +428,26 @@ export default function Race() {
                             (formik.values.rawwis>13 ? formik.values.rawwis-13 : 0) +
                             (formik.values.rawcha>13 ? formik.values.rawcha-13 : 0)
                         )}/27</div>
-                </div>
+                
                 <div>
-                    <button type="submit" onClick={formik.handleSubmit}>Save</button>
-                    <button onClick={e => {
+                    <button type="submit">Save Stats</button>
+                    <button type="button" onClick={e => {
                         formik.setFieldValue("race", JSON.parse(localStorage.getItem("raceandstats")).race);
-                        /*setTimeout(() => {
-                            formik.setFieldValue("racial1", JSON.parse(localStorage.getItem("raceandstats")).racial1);
-                            formik.setFieldValue("racial2", JSON.parse(localStorage.getItem("raceandstats")).racial1);
-                            formik.setFieldValue("racial3", JSON.parse(localStorage.getItem("raceandstats")).racial1);
-                            formik.setFieldValue("racial4", JSON.parse(localStorage.getItem("raceandstats")).racial1);
-                            }, 3000);*/
-                    }}>Load</button>
+                        formik.setFieldValue("racial1", JSON.parse(localStorage.getItem("raceandstats")).racial1);
+                        formik.setFieldValue("racial2", JSON.parse(localStorage.getItem("raceandstats")).racial2);
+                        formik.setFieldValue("racial3", JSON.parse(localStorage.getItem("raceandstats")).racial3);
+                        formik.setFieldValue("racial4", JSON.parse(localStorage.getItem("raceandstats")).racial4);
+                        formik.setFieldValue("rawstr", JSON.parse(localStorage.getItem("raceandstats")).rawstr);
+                        formik.setFieldValue("rawdex", JSON.parse(localStorage.getItem("raceandstats")).rawdex);
+                        formik.setFieldValue("rawcon", JSON.parse(localStorage.getItem("raceandstats")).rawcon);
+                        formik.setFieldValue("rawint", JSON.parse(localStorage.getItem("raceandstats")).rawint);
+                        formik.setFieldValue("rawwis", JSON.parse(localStorage.getItem("raceandstats")).rawwis);
+                        formik.setFieldValue("rawcha", JSON.parse(localStorage.getItem("raceandstats")).rawcha);
+                    }}>Load Stats</button>
+
                 </div>
+            </ThemeProvider>
             </form>
-            <button className='next' onClick={() => {
-                        navigate("/class");
-                    }}>Next: Class</button>
         </main>
     );
   }

@@ -2,7 +2,6 @@ import './App.css';
 import { useState, createContext, useContext } from "react";
 import { Routes, Route, Link, useNavigate, Navigate } from "react-router-dom";
 import Race from './components/Race.js';
-import Class from './components/Class.js';
 import Login from './components/Login.js';
 
 export const AuthContext = createContext();
@@ -20,33 +19,12 @@ function App() {
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       <div className="App">
-        <h1>D&D 5E Character Builder</h1>
-        {auth.isAuthenticated ? (
-          <nav>
-            <Link to="/race"><div>Race and Ability Scores</div></Link>
-            <Link to="/class"><div>Class</div></Link>
-            <div>Spell Selection</div>
-            <div>Background</div>
-            <div>ASIs/Feats</div>
-            <div>Character Sheet</div>
-            <button>Save</button>
-            <button>Load</button>
-            <button onClick={() => {
-                setAuth({ isAuthenticated: false });
-                navigate("/");
-              }}>Sign Out</button>
-          </nav>
-        ) : null}
+        <h1>D&D 5E Point Buy Calculator</h1>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="race" element={
               <RequiredAuth>
                 <Race />
-              </RequiredAuth>
-            } />
-          <Route path="class" element={
-              <RequiredAuth>
-                <Class />
               </RequiredAuth>
             } />
         </Routes>
