@@ -1,0 +1,189 @@
+.framecontainer {
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  align-items: flex-start;
+}
+
+.racebox {
+  border: 1px solid #CBF1A8;
+  border-radius: 2em;
+  margin: 1em;
+  padding: 1em;
+  flex-direction: column;
+}
+
+.racebox div {
+  margin: .5em;
+}
+
+.statbox {
+  display: grid;
+  grid-template-columns: fit-content(6.5em) fit-content(6.5em) 2em fit-content(6.5em);
+  grid-template-rows: 4.5em 4.5em 4.5em auto 4.5em auto 4.5em auto 4.5em auto 4.5em auto 4.5em auto 4.5em;
+  border: 1px solid #CBF1A8;
+  border-radius: 2em;
+  justify-content: center;
+  margin: 1em;
+  padding: 1em;
+  flex: 1.2;
+}
+
+.pointbuycalc, .abilityscoreerror {
+  grid-column-start: span 4;
+}
+
+.statbox h2 {
+  grid-column-start: span 4;
+}
+
+.abilityUpDown {
+  display: flex;
+  flex-direction: column;
+}
+
+.optionField {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.abilityscorelabel {
+  justify-self: flex-end;
+}
+
+.statbox div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: .25em;
+}
+
+.formikerror {
+  border-radius: 1em;
+  background: transparent;
+  border: 2px solid #FF7576;
+  color: #FF7576;
+  margin: .25em;
+  padding: .5em;
+}
+
+.statbox .css-1oorum2-MuiInputBase-root-MuiOutlinedInput-root {
+  min-width: 3em;
+}
+
+.css-hfutr2-MuiSvgIcon-root-MuiSelect-icon {
+  color: #CBF1A8 !important;
+}
+
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  color: #CBF1A8 !important;
+  text-align: center;
+  
+}
+
+.css-vle2mb-MuiFormLabel-root-MuiInputLabel-root {
+  color: #CBF1A8 !important
+}
+
+.optionsContainer {
+  border: 1px solid #CBF1A8;
+  border-radius: 2em;
+  min-width: 18em;
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.statRollerContainer {
+  border: 1px solid #CBF1A8;
+  border-radius: 2em;
+  width: 80%;
+  margin: 1em;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.saveAndLoad {
+  border: 1px solid #CBF1A8;
+  border-radius: 2em;
+  width: 80%;
+  margin: 1em;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+Button {
+  width: 10em;
+}
+
+.css-74hjzg-MuiButtonBase-root-MuiButton-root {
+  margin: .5em !important;
+}
+
+.racebox, .statbox, .statRollerContainer, .saveAndLoad, .optionsContainer {
+  background-color: #181616;
+}
+
+.racebox, .thirdbox, .optionsContainer {
+ flex: 1;
+}
+
+.abilityscore * {
+  border-color: #CBF1A8 !important;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.optionInput * {
+  border-color: #CBF1A8 !important;
+}
+
+.dropdown * {
+  border-color: #CBF1A8 !important;
+}
+
+.optionInput .css-1oorum2-MuiInputBase-root-MuiOutlinedInput-root  {
+  width: 4.5em;
+  margin: .5em;
+}
+
+#savename * {
+  border-color: #CBF1A8;
+  color: #CBF1A8;
+}
+
+.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border-color: #CBF1A8 !important;
+  min-width: 2em;
+}
+
+@media screen and (min-width:240px) and (max-width:480px), 
+   screen and (min-device-width:240px) and (max-device-width:480px)
+{
+  .framecontainer {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .racebox, .statbox, .statRollerContainer, .saveAndLoad, .optionsContainer {
+    width: 80%;
+  }
+
+  .statbox div {
+    margin: .05em;
+  }
+
+}

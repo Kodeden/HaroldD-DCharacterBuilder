@@ -1,20 +1,15 @@
 .App {
   text-align: center;
-  color: #ABE188;
+  color: #CBF1A8;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: stretch;
 }
 
 body {
-  background-color: #312F2F;
-}
-
-button {
-  margin: .5em;
-  border-radius: 1em;
-  display: inline;
-  background-color: #C44536;
-  text-align: center;
-}
-
-button:active {
-  background-color: #ABE188;
+  background-color: #181616;
+  background-image: url("./components/dungeonwall2.png");
 }
