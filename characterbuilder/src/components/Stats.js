@@ -9,12 +9,16 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import InfoIcon from '@mui/icons-material/Info';
+import HelpIcon from '@mui/icons-material/Help';
+import { filledInputClasses } from "@mui/material";
 
 
 
 export default function Stats() {
 
     const [diceMethod, setDiceMethod] = useState("Gygaxian 3d6");
+    const [tooltipRevealed, setTooltipRevealed] = useState(false);
 
     const statArray = ['rawstr', 'rawdex', 'rawcon', 'rawint', 'rawwis', 'rawcha'];
 
@@ -139,11 +143,12 @@ export default function Stats() {
                         }}
                         onChange={e => {
                             formik.handleChange(e)
-                            formik.setFieldValue("racial1", "Select an ability")
-                            formik.setFieldValue("racial2", "Select an ability")
-                            formik.setFieldValue("racial3", "Select an ability")
-                            formik.setFieldValue("racial4", "Select an ability")
-                            formik.setFieldValue("racial5", "Select an ability")
+                            formik.setFieldValue("racial1", "Select an ability");
+                            formik.setFieldValue("racial2", "Select an ability");
+                            formik.setFieldValue("racial3", "Select an ability");
+                            formik.setFieldValue("racial4", "Select an ability");
+                            formik.setFieldValue("racial5", "Select an ability");
+                            setTooltipRevealed(false);
                         }}
                     >
                         {racialBoosts.map((boosts) => {
@@ -309,7 +314,13 @@ export default function Stats() {
                     ) : null}
                 </div>
                 <div className="statbox">
-                    <h2>Ability Scores</h2>
+                    <h2><div></div><div>Ability Scores</div>
+                        <HelpIcon
+                            sx={{ fontSize: 15 }}  
+                            onClick={e => {
+                                setTooltipRevealed(!tooltipRevealed);
+                            }} />
+                        {tooltipRevealed ? <div class='tooltip'>The Raw Stats column displays the ability scores you've purchased with the point buy system, without racial modifiers. The Total Stats column reflects the same scores but with racial modifiers applied.</div> : null}</h2>
                     
                         <div className="abilityscorelabel">Ability</div>
                         <div>Raw Stats</div>
@@ -346,7 +357,7 @@ export default function Stats() {
                                 {...formik.getFieldProps("str")}
                                 onChange={formik.handleChange}
                                 value={formik.values.rawstr+((formik.values.racial1==="Strength" || formik.values.racial2==="Strength") ? 2 
-                                : (formik.values.racial3==="Strength" || formik.values.racial4==="Strength" || formik.values.race==="Human") ? 1 
+                                : (formik.values.racial3==="Strength" || formik.values.racial4==="Strength" || formik.values.racial5==="Strength" || formik.values.race==="Human (non-variant)") ? 1 
                                 : 0)}>
                             </TextField>
                         </div>
@@ -383,7 +394,7 @@ export default function Stats() {
                                 type='number' 
                                 {...formik.getFieldProps("dex")}
                                 value={formik.values.rawdex + ((formik.values.racial1==="Dexterity" || formik.values.racial2==="Dexterity") ? 2 
-                                : (formik.values.racial3==="Dexterity" || formik.values.racial4==="Dexterity" || formik.values.race==="Human") ? 1 
+                                : (formik.values.racial3==="Dexterity" || formik.values.racial4==="Dexterity" || formik.values.racial5==="Dexterity" || formik.values.race==="Human (non-variant)") ? 1 
                                 : 0)}
                                 onChange={formik.handleChange}>
                             </TextField>
@@ -421,7 +432,7 @@ export default function Stats() {
                                 type='number' 
                                 {...formik.getFieldProps("con")}
                                 value={formik.values.rawcon + ((formik.values.racial1==="Constitution" || formik.values.racial2==="Constitution") ? 2 
-                                : (formik.values.racial3==="Constitution" || formik.values.racial4==="Constitution" || formik.values.race==="Human") ? 1 
+                                : (formik.values.racial3==="Constitution" || formik.values.racial4==="Constitution" || formik.values.racial5==="Constitution" || formik.values.race==="Human (non-variant)") ? 1 
                                 : 0)}
                                 onChange={formik.handleChange}>
                             </TextField>
@@ -459,7 +470,7 @@ export default function Stats() {
                                 type='number' 
                                 {...formik.getFieldProps("int")}
                                 value={formik.values.rawint + ((formik.values.racial1==="Intelligence" || formik.values.racial2==="Intelligence") ? 2 
-                                : (formik.values.racial3==="Intelligence" || formik.values.racial4==="Intelligence" || formik.values.race==="Human") ? 1 
+                                : (formik.values.racial3==="Intelligence" || formik.values.racial4==="Intelligence" || formik.values.racial5==="Intelligence" || formik.values.race==="Human (non-variant)") ? 1 
                                 : 0)}
                                 onChange={formik.handleChange}>
                             </TextField>
@@ -497,7 +508,7 @@ export default function Stats() {
                                 type='number' 
                                 {...formik.getFieldProps("wis")}
                                 value={formik.values.rawwis + ((formik.values.racial1==="Wisdom" || formik.values.racial2==="Wisdom") ? 2 
-                                : (formik.values.racial3==="Wisdom" || formik.values.racial4==="Wisdom" || formik.values.race==="Human") ? 1 
+                                : (formik.values.racial3==="Wisdom" || formik.values.racial4==="Wisdom" || formik.values.racial5==="Wisdom" || formik.values.race==="Human (non-variant)") ? 1 
                                 : 0)}
                                 onChange={formik.handleChange}>
                             </TextField>
@@ -535,7 +546,7 @@ export default function Stats() {
                                 type='number' 
                                 {...formik.getFieldProps("cha")}
                                 value={formik.values.rawcha + ((formik.values.racial1==="Charisma" || formik.values.racial2==="Charisma") ? 2 
-                                : (formik.values.racial3==="Charisma" || formik.values.racial4==="Charisma" || formik.values.race==="Human") ? 1 
+                                : (formik.values.racial3==="Charisma" || formik.values.racial4==="Charisma" || formik.values.racial5==="Charisma" || formik.values.race==="Human (non-variant)") ? 1 
                                 : 0)}
                                 onChange={formik.handleChange}>
                             </TextField>
@@ -594,7 +605,8 @@ export default function Stats() {
                             {...formik.getFieldProps("savename")}
                             value={formik.values.savename}
                             onChange={formik.handleChange}>
-                        </TextField><Button variant='contained' type="submit">Save Stats</Button>
+                        </TextField>
+                        <Button variant='contained' type="submit">Save Stats</Button>
                         <Button variant='contained' type="button" onClick={e => {
                             formik.setFieldValue("race", JSON.parse(localStorage.getItem("raceandstats")).race);
                             formik.setFieldValue("racial1", JSON.parse(localStorage.getItem("raceandstats")).racial1);

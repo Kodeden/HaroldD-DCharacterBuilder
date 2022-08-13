@@ -35,6 +35,27 @@
 
 .statbox h2 {
   grid-column-start: span 4;
+  display: grid;
+  grid-template-columns: 2em auto 2em;
+  justify-content: center;
+}
+
+.statbox h2 svg {
+  cursor: pointer;
+}
+
+.tooltip {
+  position: relative;
+  left: 18.5em;
+  top: -14.5em;
+  width: 20em;
+  height: 9em;
+  background-color: #181616;
+  border-radius: 2em 2em 2em 0;
+  border: 1px solid #CBF1A8;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 1em;
 }
 
 .abilityUpDown {
@@ -68,11 +89,20 @@
   padding: .5em;
 }
 
+svg path {
+  width: em;
+}
+
 .statbox .css-1oorum2-MuiInputBase-root-MuiOutlinedInput-root {
   min-width: 3em;
 }
 
-.css-hfutr2-MuiSvgIcon-root-MuiSelect-icon {
+.statbox input {
+  color: #CBF1A8;
+  text-align: center;
+}
+
+svg {
   color: #CBF1A8 !important;
 }
 
@@ -97,6 +127,11 @@
   justify-content: center;
 }
 
+.optionsContainer input {
+  color: #CBF1A8;
+  text-align: center;
+}
+
 .statRollerContainer {
   border: 1px solid #CBF1A8;
   border-radius: 2em;
@@ -118,6 +153,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+}
+
+.saveAndLoad input {
+  color: #CBF1A8;
 }
 
 Button {
@@ -154,9 +193,13 @@ input[type=number]::-webkit-outer-spin-button {
   border-color: #CBF1A8 !important;
 }
 
-.optionInput .css-1oorum2-MuiInputBase-root-MuiOutlinedInput-root  {
-  width: 4.5em;
+.thirdbox button {
   margin: .5em;
+}
+
+input[type=number]  {
+  width: 3em;
+  margin: 0;
 }
 
 #savename * {
@@ -164,9 +207,9 @@ input[type=number]::-webkit-outer-spin-button {
   color: #CBF1A8;
 }
 
-.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
-  border-color: #CBF1A8 !important;
-  min-width: 2em;
+.optionField {
+  margin-bottom: .5em;
+  margin-top: .5em;
 }
 
 @media screen and (min-width:240px) and (max-width:480px), 
@@ -182,8 +225,24 @@ input[type=number]::-webkit-outer-spin-button {
     width: 80%;
   }
 
+  .racebox {
+    padding: auto;
+    margin: auto;
+  }
+  
   .statbox div {
     margin: .05em;
   }
 
+  
+  .tooltip {
+    left: 10.5em;
+    top: -20.5em;
+    width: 10em;
+    height: 15em;
+    border-radius: 2em;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 1em;
+  }
 }
