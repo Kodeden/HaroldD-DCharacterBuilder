@@ -354,6 +354,7 @@ export default function Stats() {
                                 }}
                                 className='abilityscore' 
                                 type='number' 
+                                inputProps={{ "data-testid": "str" }}
                                 {...formik.getFieldProps("str")}
                                 onChange={formik.handleChange}
                                 value={formik.values.rawstr+((formik.values.racial1==="Strength" || formik.values.racial2==="Strength") ? 2 
@@ -362,7 +363,7 @@ export default function Stats() {
                             </TextField>
                         </div>
                         <div className='abilityscoreerror'>
-                            {formik.touched.rawstr && formik.errors.rawstr ? (<span data-testid="strerror" className="formikerror">{formik.errors.rawstr}</span>) : null}
+                            {formik.errors.rawstr ? (<span data-testid="strerror" className="formikerror">{formik.errors.rawstr}</span>) : null}
                         </div>
                         <div className="abilityscorelabel">Dexterity:</div>
                         <div>
@@ -392,6 +393,7 @@ export default function Stats() {
                                 }}
                                 className='abilityscore' 
                                 type='number' 
+                                inputProps={{ "data-testid": "dex" }}
                                 {...formik.getFieldProps("dex")}
                                 value={formik.values.rawdex + ((formik.values.racial1==="Dexterity" || formik.values.racial2==="Dexterity") ? 2 
                                 : (formik.values.racial3==="Dexterity" || formik.values.racial4==="Dexterity" || formik.values.racial5==="Dexterity" || formik.values.race==="Human (non-variant)") ? 1 
@@ -400,7 +402,7 @@ export default function Stats() {
                             </TextField>
                         </div>
                         <div className='abilityscoreerror'>
-                            {formik.touched.rawdex && formik.errors.rawdex ? (<span className="formikerror">{formik.errors.rawdex}</span>) : null}
+                            {formik.errors.rawdex ? (<span className="formikerror">{formik.errors.rawdex}</span>) : null}
                         </div>
                         <div className="abilityscorelabel">Constitution:</div>
                         <div>
@@ -430,6 +432,7 @@ export default function Stats() {
                                 }}
                                 className='abilityscore' 
                                 type='number' 
+                                inputProps={{ "data-testid": "con" }}
                                 {...formik.getFieldProps("con")}
                                 value={formik.values.rawcon + ((formik.values.racial1==="Constitution" || formik.values.racial2==="Constitution") ? 2 
                                 : (formik.values.racial3==="Constitution" || formik.values.racial4==="Constitution" || formik.values.racial5==="Constitution" || formik.values.race==="Human (non-variant)") ? 1 
@@ -438,7 +441,7 @@ export default function Stats() {
                             </TextField>
                         </div>
                         <div className='abilityscoreerror'>
-                            {formik.touched.rawcon && formik.errors.rawcon ? (<span className="formikerror">{formik.errors.rawcon}</span>) : null}
+                            {formik.errors.rawcon ? (<span className="formikerror">{formik.errors.rawcon}</span>) : null}
                         </div>
                         <div className="abilityscorelabel">Intelligence:</div>
                         <div>
@@ -468,6 +471,7 @@ export default function Stats() {
                                 }}
                                 className='abilityscore' 
                                 type='number' 
+                                inputProps={{ "data-testid": "int" }}
                                 {...formik.getFieldProps("int")}
                                 value={formik.values.rawint + ((formik.values.racial1==="Intelligence" || formik.values.racial2==="Intelligence") ? 2 
                                 : (formik.values.racial3==="Intelligence" || formik.values.racial4==="Intelligence" || formik.values.racial5==="Intelligence" || formik.values.race==="Human (non-variant)") ? 1 
@@ -476,7 +480,7 @@ export default function Stats() {
                             </TextField>
                         </div>
                         <div className='abilityscoreerror'>
-                            {formik.touched.rawint && formik.errors.rawint ? (<span className="formikerror">{formik.errors.rawint}</span>) : null}
+                            {formik.errors.rawint ? (<span className="formikerror">{formik.errors.rawint}</span>) : null}
                         </div>
                         <div className="abilityscorelabel">Wisdom:</div>
                         <div>
@@ -506,6 +510,7 @@ export default function Stats() {
                                 }}
                                 className='abilityscore' 
                                 type='number' 
+                                inputProps={{ "data-testid": "wis" }}
                                 {...formik.getFieldProps("wis")}
                                 value={formik.values.rawwis + ((formik.values.racial1==="Wisdom" || formik.values.racial2==="Wisdom") ? 2 
                                 : (formik.values.racial3==="Wisdom" || formik.values.racial4==="Wisdom" || formik.values.racial5==="Wisdom" || formik.values.race==="Human (non-variant)") ? 1 
@@ -514,7 +519,7 @@ export default function Stats() {
                             </TextField>
                         </div>
                         <div className='abilityscoreerror'>
-                            {formik.touched.rawwis && formik.errors.rawwis ? (<span className="formikerror">{formik.errors.rawwis}</span>) : null}
+                            {formik.errors.rawwis ? (<span className="formikerror">{formik.errors.rawwis}</span>) : null}
                         </div>
                         <div className="abilityscorelabel">Charisma:</div>
                         <div>
@@ -544,6 +549,7 @@ export default function Stats() {
                                 }}
                                 className='abilityscore' 
                                 type='number' 
+                                inputProps={{ "data-testid": "cha" }}
                                 {...formik.getFieldProps("cha")}
                                 value={formik.values.rawcha + ((formik.values.racial1==="Charisma" || formik.values.racial2==="Charisma") ? 2 
                                 : (formik.values.racial3==="Charisma" || formik.values.racial4==="Charisma" || formik.values.racial5==="Charisma" || formik.values.race==="Human (non-variant)") ? 1 
@@ -552,7 +558,7 @@ export default function Stats() {
                             </TextField>
                         </div>
                         <div className='abilityscoreerror'>
-                            {formik.touched.rawcha && formik.errors.rawcha ? (<span className="formikerror">{formik.errors.rawcha}</span>) : null}
+                            {formik.errors.rawcha ? (<span className="formikerror">{formik.errors.rawcha}</span>) : null}
                         </div>
                         <div className="pointbuycalc">Point Buy {(
                             formik.values.rawstr>formik.values.maxPointBuyStat ||
