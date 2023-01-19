@@ -338,11 +338,15 @@ export default function Stats() {
                             </TextField>
                         </div>
                         <div className="abilityUpDown">
-                            <ArrowDropUpIcon onClick={e => {
+                            <ArrowDropUpIcon 
+                                data-testid= "strup"
+                                onClick={e => {
                                 formik.setFieldValue("rawstr", formik.values.rawstr+1);
                                 }}>
                             </ArrowDropUpIcon>
-                            <ArrowDropDownIcon onClick={e => {
+                            <ArrowDropDownIcon 
+                                data-testid= "strdown"
+                                onClick={e => {
                                 formik.setFieldValue("rawstr", formik.values.rawstr-1);
                                 }}>
                             </ArrowDropDownIcon>
@@ -402,7 +406,7 @@ export default function Stats() {
                             </TextField>
                         </div>
                         <div className='abilityscoreerror'>
-                            {formik.errors.rawdex ? (<span className="formikerror">{formik.errors.rawdex}</span>) : null}
+                            {formik.errors.rawdex ? (<span data-testid="dexerror" className="formikerror">{formik.errors.rawdex}</span>) : null}
                         </div>
                         <div className="abilityscorelabel">Constitution:</div>
                         <div>
@@ -441,7 +445,7 @@ export default function Stats() {
                             </TextField>
                         </div>
                         <div className='abilityscoreerror'>
-                            {formik.errors.rawcon ? (<span className="formikerror">{formik.errors.rawcon}</span>) : null}
+                            {formik.errors.rawcon ? (<span data-testid="conerror" className="formikerror">{formik.errors.rawcon}</span>) : null}
                         </div>
                         <div className="abilityscorelabel">Intelligence:</div>
                         <div>
@@ -480,7 +484,7 @@ export default function Stats() {
                             </TextField>
                         </div>
                         <div className='abilityscoreerror'>
-                            {formik.errors.rawint ? (<span className="formikerror">{formik.errors.rawint}</span>) : null}
+                            {formik.errors.rawint ? (<span data-testid="interror" className="formikerror">{formik.errors.rawint}</span>) : null}
                         </div>
                         <div className="abilityscorelabel">Wisdom:</div>
                         <div>
@@ -519,7 +523,7 @@ export default function Stats() {
                             </TextField>
                         </div>
                         <div className='abilityscoreerror'>
-                            {formik.errors.rawwis ? (<span className="formikerror">{formik.errors.rawwis}</span>) : null}
+                            {formik.errors.rawwis ? (<span data-testid="wiserror" className="formikerror">{formik.errors.rawwis}</span>) : null}
                         </div>
                         <div className="abilityscorelabel">Charisma:</div>
                         <div>
@@ -558,7 +562,7 @@ export default function Stats() {
                             </TextField>
                         </div>
                         <div className='abilityscoreerror'>
-                            {formik.errors.rawcha ? (<span className="formikerror">{formik.errors.rawcha}</span>) : null}
+                            {formik.errors.rawcha ? (<span data-testid="chaerror" className="formikerror">{formik.errors.rawcha}</span>) : null}
                         </div>
                         <div className="pointbuycalc">Point Buy {(
                             formik.values.rawstr>formik.values.maxPointBuyStat ||

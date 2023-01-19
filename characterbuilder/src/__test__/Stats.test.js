@@ -58,16 +58,97 @@ describe("The default values for race and stats appear onscreen", () => {
     });
 });
 
-
 describe("The errors for stats appear onscreen as appropriate", () => {
 
-    it("The errors appear when a stat exceeds 18", () => {
+    it("The errors appear when a stat exceeds 18", async () => {
         render(<Stats />);
-        const input = screen.getByTestId("rawstr");
+        let input = screen.getByTestId("rawstr");
         fireEvent.change(input, { target: { value: "19" } });
         fireEvent.click(screen.getByTestId("rawdex"));
-        const errorOutput = screen.getByText(/Abilities/);
+        let errorOutput = await screen.findByTestId("strerror");
         expect(errorOutput).toBeTruthy();
     });
 
-});
+}); 
+
+describe("The errors for stats appear onscreen as appropriate", () => {
+
+    it("The error appears when str exceeds 18 or is below 3", async () => {
+        render(<Stats />);
+        let input = screen.getByTestId("rawstr");
+        fireEvent.change(input, { target: { value: "19" } });
+        fireEvent.click(screen.getByTestId("rawdex"));
+        let errorOutput = await screen.findByTestId("strerror");
+        expect(errorOutput).toBeTruthy();
+        fireEvent.change(input, { target: { value: "2" } });
+        fireEvent.click(screen.getByTestId("rawdex"));
+        errorOutput = await screen.findByTestId("strerror");
+        expect(errorOutput).toBeTruthy();
+    });
+
+    it("The error appears when dex exceeds 18 or is below 3", async () => {
+        render(<Stats />);
+        let input = screen.getByTestId("rawdex");
+        fireEvent.change(input, { target: { value: "19" } });
+        fireEvent.click(screen.getByTestId("rawstr"));
+        let errorOutput = await screen.findByTestId("dexerror");
+        expect(errorOutput).toBeTruthy();
+        fireEvent.change(input, { target: { value: "2" } });
+        fireEvent.click(screen.getByTestId("rawstr"));
+        errorOutput = await screen.findByTestId("dexerror");
+        expect(errorOutput).toBeTruthy();
+    });
+
+    it("The error appears when con exceeds 18 or is below 3", async () => {
+        render(<Stats />);
+        let input = screen.getByTestId("rawcon");
+        fireEvent.change(input, { target: { value: "19" } });
+        fireEvent.click(screen.getByTestId("rawdex"));
+        let errorOutput = await screen.findByTestId("conerror");
+        expect(errorOutput).toBeTruthy();
+        fireEvent.change(input, { target: { value: "2" } });
+        fireEvent.click(screen.getByTestId("rawdex"));
+        errorOutput = await screen.findByTestId("conerror");
+        expect(errorOutput).toBeTruthy();
+    });
+
+    it("The error appears when int exceeds 18 or is below 3", async () => {
+        render(<Stats />);
+        let input = screen.getByTestId("rawint");
+        fireEvent.change(input, { target: { value: "19" } });
+        fireEvent.click(screen.getByTestId("rawdex"));
+        let errorOutput = await screen.findByTestId("interror");
+        expect(errorOutput).toBeTruthy();
+        fireEvent.change(input, { target: { value: "2" } });
+        fireEvent.click(screen.getByTestId("rawdex"));
+        errorOutput = await screen.findByTestId("interror");
+        expect(errorOutput).toBeTruthy();
+    });
+
+    it("The error appears when wis exceeds 18 or is below 3", async () => {
+        render(<Stats />);
+        let input = screen.getByTestId("rawwis");
+        fireEvent.change(input, { target: { value: "19" } });
+        fireEvent.click(screen.getByTestId("rawdex"));
+        let errorOutput = await screen.findByTestId("wiserror");
+        expect(errorOutput).toBeTruthy();
+        fireEvent.change(input, { target: { value: "2" } });
+        fireEvent.click(screen.getByTestId("rawdex"));
+        errorOutput = await screen.findByTestId("wiserror");
+        expect(errorOutput).toBeTruthy();
+    });
+
+    it("The error appears when cha exceeds 18 or is below 3", async () => {
+        render(<Stats />);
+        let input = screen.getByTestId("rawcha");
+        fireEvent.change(input, { target: { value: "19" } });
+        fireEvent.click(screen.getByTestId("rawdex"));
+        let errorOutput = await screen.findByTestId("chaerror");
+        expect(errorOutput).toBeTruthy();
+        fireEvent.change(input, { target: { value: "2" } });
+        fireEvent.click(screen.getByTestId("rawdex"));
+        errorOutput = await screen.findByTestId("chaerror");
+        expect(errorOutput).toBeTruthy();
+    });
+
+}); 
