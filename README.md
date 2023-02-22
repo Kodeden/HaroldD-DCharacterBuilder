@@ -1,2 +1,4 @@
 # HaroldD-DCharacterBuilder
-D&amp;D Character Builder Project
+D&amp;D Stat Generator
+
+live at https://estatgenerator.web.app/ 
